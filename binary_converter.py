@@ -1,3 +1,5 @@
+import string
+
 from table import *
 
 table = Table()
@@ -13,8 +15,6 @@ def fill_table():
 def string_to_binary(string):
     result = ""
     for letter in string:
-        # if letter == " ":
-        #     letter = "Space"
         key = table.get(letter)
         result += key.binary
         if letter == " ":
@@ -23,4 +23,5 @@ def string_to_binary(string):
 
 
 fill_table()
-print(string_to_binary("Fuck off you ass"))
+
+print(string_to_binary(f"Test; rand.om characters {string.punctuation}"))
