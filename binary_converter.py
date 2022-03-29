@@ -1,29 +1,26 @@
 from table import *
 
-binary = "binary.txt"
-
-with open(binary) as file:
-    lines = file.read().split("\n")
-
-hex_, bin_, ascii_ = [], [], []
-
-for index, line in enumerate(lines):
-    temp = line.split("\t")
-    hex_.append(temp[0])
-    bin_.append(temp[1])
-    ascii_.append(temp[2])
-
 table = Table()
 
-for i in range(len(bin_)):
-    table.store(hex_[i], bin_[i], ascii_[i])
 
-word = "Today's date space"
-result = ""
-for letter in word:
-    if letter == " ":
-        letter = "Space"
-    key = table.get(letter)
-    result += key.binary
+def fill_table():
+    with open("binary.txt") as file:
+        for index, line in enumerate(file):
+            line_list = line.strip().split("\t")  # strip to remove new line
+            table.store(line_list[0], line_list[1], line_list[2])
 
-print(result)
+
+def string_to_binary(string):
+    result = ""
+    for letter in string:
+        # if letter == " ":
+        #     letter = "Space"
+        key = table.get(letter)
+        result += key.binary
+        if letter == " ":
+            result += " "
+    return result
+
+
+fill_table()
+print(string_to_binary("Fuck off you ass"))

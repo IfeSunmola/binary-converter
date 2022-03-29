@@ -2,10 +2,10 @@ class KeyValue:
     def __init__(self, hex_, binary, ascii_):
         self.hex = hex_
         self.binary = binary
-        self.ascii = ascii_ # key
+        self.ascii = ascii_  # key
 
     def __str__(self):
-        return f"{self.hex}        {self.binary}        {self.ascii}"
+        return f"{self.hex}   {self.binary}   {self.ascii}"
 
     def __eq__(self, other):
         result = False
@@ -34,9 +34,11 @@ class Table:
             self.num_entries += 1
 
         if self.load() >= 2 / 3:
-            self.grow()
+            self.re_hash()
 
     def get(self, key):
+        if key == " ":
+            key = "Space"
         index = abs(hash(key)) % self.actual_size
         while self.table[index] is not None:
             if self.table[index].ascii == key:
@@ -45,7 +47,8 @@ class Table:
             index %= self.actual_size
         raise KeyError
 
-    def grow(self):
+    def re_hash(self):  # there's enough space, this should never run
+        print("---------REHASH IS RUNNING---------")
         temp_actual_size = self.find_prime(self.actual_size * 1.5 * 2)
         temp_table = [None] * temp_actual_size
 
@@ -61,8 +64,7 @@ class Table:
         self.actual_size = temp_actual_size
 
     def __str__(self):
-        result = f"actual size: {self.num_entries}\n"
-        result += f"max size: {self.actual_size}\n==============\n"
+        result = ""
         for value in self.table:
             if value is not None:
                 result += f"{value}\n"
