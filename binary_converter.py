@@ -1,10 +1,10 @@
 from table import *
 
-table = HashTable()
-
 """
 CALL FILL TABLE FIRST BEFORE DOING ANYTHING
 """
+
+table = HashTable()
 
 
 def fill_table():
@@ -31,18 +31,18 @@ def letter_to_hex(letter):
 
 def word_to_binary(word):
     """
+    Splitting the binary result into different lines is almost impossible because when trying to convert the result back
+    to words, a KeyError will be thrown because the hash table doesn't have "\n". Adding "\n" to the binary.txt
+    file will raise some issues
+
     for each letter in the word:
         get the hex code
         use the hex code to get the binary equivalent from the hash table
     """
     result = ""
     for letter in word:
-        hex_value = letter_to_hex(letter)
-        result += table.get(hex_value).get_binary()
-
-        # uncomment below to give spacing to words
-        # if letter == " ":
-        #     result += " "
+        hex_code = letter_to_hex(letter)
+        result += table.get(hex_code).get_binary()
     return result
 
 
@@ -67,3 +67,15 @@ def binary_to_word(binary):
         prev_index = curr_index
         curr_index += 8
     return result
+
+
+if __name__ == '__main__':
+    fill_table()
+    sample_sentence = "Light theme sucks, dark theme is the best."
+
+    to_binary = word_to_binary(sample_sentence);
+    to_word = binary_to_word(to_binary)
+
+    print(f"Original sentence:\n{sample_sentence}\n")
+    print(f"Converted to binary:\n{to_binary}\n")
+    print(f"Converted back to words:\n{to_word}\n")
